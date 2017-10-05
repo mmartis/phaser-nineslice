@@ -1,9 +1,9 @@
 /*!
- * phaser-nineslice - version 2.0.1 
+ * phaser-nineslice - version 2.0.2 
  * NineSlice plugin for Phaser.io!
  *
  * OrangeGames
- * Build at 03-07-2017
+ * Build at 05-10-2017
  * Released under MIT License 
  */
 
@@ -25,6 +25,7 @@ var PhaserNineSlice;
             var _this = _super.call(this, game, x, y, key, frame) || this;
             _this.baseTexture = _this.texture.baseTexture;
             _this.baseFrame = _this.texture.frame;
+            _this.atlasKey = key;
             if (frame !== null && !data) {
                 data = game.cache.getNineSlice(frame);
             }
@@ -77,6 +78,11 @@ var PhaserNineSlice;
             this.localWidth = width;
             this.localHeight = height;
             this.renderTexture();
+        };
+        NineSlice.prototype.changeFrame = function (frame) {
+            var frameData = this.game.cache.getFrameByName(this.atlasKey, frame);
+            this.baseFrame = new PIXI.Rectangle(frameData.x, frameData.y, frameData.width, frameData.height);
+            this.resize(this.localWidth, this.localHeight);
         };
         NineSlice.prototype.destroy = function () {
             var args = [];

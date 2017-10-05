@@ -10,9 +10,11 @@ declare module PhaserNineSlice {
         baseTexture: PIXI.BaseTexture;
         texture: Phaser.RenderTexture;
         private baseFrame;
+        private atlasKey;
         constructor(game: PhaserNineSlice.NineSliceGame, x: number, y: number, key: string, frame: string, width: number, height: number, data?: NineSliceCacheData);
         private renderTexture();
         resize(width: number, height: number): void;
+        changeFrame(frame: string): void;
         destroy(...args: any[]): void;
         private createTexturePart(x, y, width, height);
     }

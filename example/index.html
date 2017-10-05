@@ -22,6 +22,7 @@
         var expansionRateW = 2;
         var expansionRateH = 2;
 
+        var currentFrame = 'btn_clean.png';
 
         function preload(){
             // add plugins in one of the states e.g. preload or init
@@ -37,6 +38,48 @@
             sliceContainer = game.add.nineSlice(5, 5, 'robot', null, 48, 48);
 
 	        createButton(game);
+	        changeFrameExample(game);
+
+        }
+
+        function changeFrameExample(game) {
+
+            var sliceButton = new PhaserNineSlice.NineSlice(
+                game,           // Phaser.Game
+                150,            // x position
+                200,            // y position
+                'buttons',      // atlas key
+                currentFrame,// Image frame
+                200,            // expected width
+                100,            // expected height
+                { //And this is the framedata, normally this is passed when preloading. Check README for details
+                    top: 20,    // Amount of pixels for top
+                    bottom: 23, // Amount of pixels for bottom
+                    left: 27,   // Amount of pixels for left
+                    right: 28   // Amount of pixels for right
+                }
+            );
+
+            sliceButton.inputEnabled = true;
+
+            sliceButton.events.onInputDown.add(function () {
+
+                if (currentFrame === 'btn_clean.png') {
+
+                    currentFrame = 'inputfield.png';
+
+                } else {
+
+                    currentFrame = 'btn_clean.png';
+
+                }
+
+                this.changeFrame(currentFrame);
+
+            }, sliceButton);
+
+            game.add.existing(sliceButton);
+
         }
 
         function createButton(game) {
