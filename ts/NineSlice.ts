@@ -21,12 +21,15 @@ module PhaserNineSlice {
         public baseTexture: PIXI.BaseTexture;
         public texture: Phaser.RenderTexture;
         private baseFrame: PIXI.Rectangle;
+        private atlasKey: string;
 
         constructor(game: PhaserNineSlice.NineSliceGame, x:number, y:number, key: string, frame: string, width:number, height:number, data?: NineSliceCacheData) {
             super(game, x, y, key, frame);
 
             this.baseTexture = this.texture.baseTexture;
             this.baseFrame = this.texture.frame;
+
+            this.atlasKey = key;
 
             if (frame !== null && !data) {
                 data = game.cache.getNineSlice(frame);
@@ -105,6 +108,16 @@ module PhaserNineSlice {
             this.localHeight = height;
 
             this.renderTexture();
+        }
+
+        public changeFrame(frame: string): void {
+
+            let frameData: Phaser.Frame = this.game.cache.getFrameByName(this.atlasKey, frame);
+
+            this.baseFrame = new PIXI.Rectangle(frameData.x, frameData.y, frameData.width, frameData.height);
+
+            this.resize(this.localWidth, this.localHeight);
+
         }
 
         /**
